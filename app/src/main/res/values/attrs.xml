@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <declare-styleable name="AppKeyboard">
+        <attr name="state_long_pressable" format="boolean" />
+        <attr name="keyWidth" format="dimension|fraction" />
+        <attr name="keyHeight" format="dimension|fraction" />
+        <attr name="horizontalGap" format="dimension|fraction" />
+        <attr name="verticalGap" format="dimension|fraction" />
+        <attr name="layout_margin" format="dimension"  />
+    </declare-styleable>
+
+    <declare-styleable name="AppKeyboard_Row">
+        <attr name="rowEdgeFlags">
+            <!-- Row is anchored to the top of the keyboard.-->
+            <flag name="top" value="4" />
+            <!-- Row is anchored to the bottom of the keyboard. -->
+            <flag name="bottom" value="8" />
+        </attr>
+        <attr name="keyboardMode" format="reference" />
+
+    </declare-styleable>
+
+    <declare-styleable name="AppKeyboard_Key">
+        <attr name="codes" format="integer|string" />
+        <attr name="iconPreview" format="integer" />
+        <attr name="popupCharacters" format="integer" />
+        <attr name="popupKeyboard" format="integer" />
+        <attr name="isRepeatable" format="boolean" />
+        <attr name="isModifier" format="boolean" />
+        <attr name="isSticky" format="boolean" />
+        <attr name="gap" format="dimension|fraction" />
+        <attr name="keyEdgeFlags">
+            <!-- Key is anchored to the left of the keyboard.-->
+            <flag name="left" value="1" />
+            <!-- Key is anchored to the right of the keyboard.-->
+            <flag name="right" value="2" />
+        </attr>
+        <attr name="keyIcon" format="reference" />
+        <attr name="keyLabel" format="string" />
+        <attr name="keyOutputText" format="string" />
+
+    </declare-styleable>
+
+    <declare-styleable name="AppKeyboardView">
+        <attr name="keyBackground" format="reference"/>
+        <attr name="verticalCorrection" format="integer"/>
+        <attr name="keyPreviewLayout" format="integer"/>
+        <attr name="keyPreviewOffset" format="integer"/>
+        <attr name="keyPreviewHeight" format="integer"/>
+        <attr name="keyTextSize" format="dimension"/>
+        <attr name="keyTextColor" format="color"/>
+        <attr name="labelTextSize" format="dimension"/>
+        <attr name="popupLayout" format="integer"/>
+        <attr name="shadowColor" format="integer"/>
+        <attr name="shadowRadius" format="integer"/>
+    </declare-styleable>
+
+    <declare-styleable name="Theme">
+        <attr name="backgroundDimAmount" format="integer"/>
+
+    </declare-styleable>
+
+    <bool name="config_swipeDisambiguation">true</bool>
+
+
+    <attr name="AppkeyboardViewStyle" format="reference"/>
+
+</resources>

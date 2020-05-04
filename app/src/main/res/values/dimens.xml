@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="key_height">45dip</dimen>
+    <dimen name="key_width">8%p</dimen>
+    <dimen name="font_key_size">20%p</dimen>
+    <dimen name="key_text_size">20sp</dimen>
+   <dimen name="corner_radius0">0dp</dimen>
+   <dimen name="corner_radius5">5dp</dimen>
+   <dimen name="card_elevation">3dp</dimen>
+   <dimen name="margin10">10dp</dimen>
+   <dimen name="margin6">6dp</dimen>
+   <dimen name="margin5">5dp</dimen>
+   <dimen name="margin2">2dp</dimen>
+   <dimen name="margin8">8dp</dimen>
+   <dimen name="card_corner_radius">3dp</dimen>
+   <dimen name="view_height">35dp</dimen>
+   <dimen name="view_width">90dp</dimen>
+</resources>

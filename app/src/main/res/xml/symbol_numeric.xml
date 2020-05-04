@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AppKeyboard app:keyWidth="@dimen/key_width"
+    app:keyHeight="@dimen/key_height"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <Row>
+        <Key app:codes="49" app:keyLabel="1" app:keyEdgeFlags="left"/>
+        <Key app:codes="50" app:keyLabel="2"/>
+        <Key app:codes="51" app:keyLabel="3"/>
+        <Key app:codes="52" app:keyLabel="4"/>
+        <Key app:codes="53" app:keyLabel="5"/>
+        <Key app:codes="54" app:keyLabel="6"/>
+        <Key app:codes="55" app:keyLabel="7"/>
+        <Key app:codes="56" app:keyLabel="8"/>
+        <Key app:codes="57" app:keyLabel="9"/>
+        <Key app:codes="48" app:keyLabel="0" app:keyEdgeFlags="right"/>
+    </Row>
+
+    <Row>
+        <Key app:codes="33" app:keyLabel="!" app:keyEdgeFlags="left"/>
+        <Key app:codes="64" app:keyLabel="\@"/>
+        <Key app:codes="35" app:keyLabel="\#"/>
+        <Key app:codes="36" app:keyLabel="$"/>
+        <Key app:codes="47" app:keyLabel="/" />
+        <Key app:codes="94" app:keyLabel="^" />
+        <Key app:codes="34" app:keyLabel="&quot;"/>
+        <Key app:codes="42" app:keyLabel="*"/>
+        <Key app:codes="40" app:keyLabel="("/>
+        <Key app:codes="41" app:keyLabel=")" app:keyEdgeFlags="right"/>
+    </Row>
+
+    <Row>
+        <Key app:codes="-102" app:isModifier="true" app:isSticky="true" app:keyLabel="1/2" app:keyWidth="12%p" app:keyEdgeFlags="left" />
+        <Key app:codes="45" app:keyLabel="-"/>
+        <Key app:codes="39" app:keyLabel="\'"/>
+        <Key app:codes="34" app:keyLabel="&quot;"/>
+        <Key app:codes="44" app:keyLabel=","/>
+        <Key app:codes="58" app:keyLabel=":"/>
+        <Key app:codes="59" app:keyLabel=";"/>
+        <Key app:codes="63" app:keyLabel="?"/>
+        <Key app:codes="-5" app:keyIcon="@drawable/backspace_icon"  app:keyWidth="12%p" app:isRepeatable="true" app:keyEdgeFlags="right"/>
+    </Row>
+
+
+    <Row>
+        <Key app:codes="-2" app:keyLabel="!#1" app:keyWidth="13%p" app:keyEdgeFlags="left"/>
+        <Key app:codes="44" app:keyLabel="," />
+        <Key app:codes="-101" app:keyIcon="@drawable/language_icon" />
+        <Key app:codes="32" app:keyIcon="@drawable/spacebar_icon" app:keyWidth="30%p" app:isRepeatable="true" />
+        <Key app:codes="46" app:keyLabel="." />
+        <Key app:codes="10"  app:keyIcon="@drawable/keyboard_return_icon" app:keyWidth="13%p" app:keyEdgeFlags="right" />
+    </Row>
+</AppKeyboard>
