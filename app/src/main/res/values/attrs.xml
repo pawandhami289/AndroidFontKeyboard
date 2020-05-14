@@ -43,6 +43,7 @@
     </declare-styleable>
 
     <declare-styleable name="AppKeyboardView">
+        <attr name="keyboardViewStyle" format="reference" />
         <attr name="keyBackground" format="reference"/>
         <attr name="verticalCorrection" format="integer"/>
         <attr name="keyPreviewLayout" format="integer"/>

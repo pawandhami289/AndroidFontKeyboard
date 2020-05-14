@@ -1,7 +1,6 @@
 package com.highstarapp.fontkeyboard;
 
 
-import android.util.Log;
 import android.view.View;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -27,18 +26,28 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityManager;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-
 import androidx.annotation.Nullable;
+import org.jetbrains.annotations.NotNull;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 
-public class AppKeyboardView extends View implements View.OnClickListener {
+public class AppKeyboardView extends View implements View.OnClickListener , OnFontEmojiListener{
 
-    private int mPaddingTop = 5;
-    private int mPaddingLeft = 5;
+    private int mPaddingTop = 0;
+    private int mPaddingLeft =0;
+
+
+
+    @Override
+    public void onFontChange(@NotNull ArrayList<Models.AppFonts> fonts) {
+        onFontDraw(fonts);
+    }
+
+
 
     public interface OnKeyboardActionListener {
 
@@ -55,7 +64,7 @@ public class AppKeyboardView extends View implements View.OnClickListener {
          * For keys that repeat, this is only called once.
          * @param primaryCode the code of the key that was released
          */
-        void onRelease(int primaryCode);
+        void onRelease(int[] primaryCode);
 
         /**
          * Send a key press to the listener.
@@ -67,7 +76,7 @@ public class AppKeyboardView extends View implements View.OnClickListener {
          * These codes are useful to correct for accidental presses of a key adjacent to
          * the intended key.
          */
-        void onKey(int primaryCode, int[] keyCodes);
+        void onKey(int[] primaryCode, int[] keyCodes);
 
         /**
          * Sends a sequence of characters to the listener.
@@ -99,11 +108,11 @@ public class AppKeyboardView extends View implements View.OnClickListener {
     }
 
     private static final boolean DEBUG = false;
-    private static final int NOT_A_KEY = -1;
-    private static final int[] KEY_DELETE = { AppKeyboard.KEYCODE_DELETE };
+    private static final int[] NOT_A_KEY = {-1};
+    private static final int[] KEY_DELETE = { AppKeyboard.KEYCODE_DELETE[0] };
     private static final int[] LONG_PRESSABLE_STATE_SET = { R.attr.state_long_pressable };
     private AppKeyboard mKeyboard;
-    private int mCurrentKeyIndex = NOT_A_KEY;
+    private int mCurrentKeyIndex = NOT_A_KEY[0];
     private int mLabelTextSize;
     private int mKeyTextSize;
     private int mKeyTextColor;
@@ -164,15 +173,15 @@ public class AppKeyboardView extends View implements View.OnClickListener {
     private int mLastKey;
     private int mLastCodeX;
     private int mLastCodeY;
-    private int mCurrentKey = NOT_A_KEY;
-    private int mDownKey = NOT_A_KEY;
+    private int mCurrentKey = NOT_A_KEY[0];
+    private int mDownKey = NOT_A_KEY[0];
     private long mLastKeyTime;
     private long mCurrentKeyTime;
     private int[] mKeyIndices = new int[12];
     private GestureDetector mGestureDetector;
     private int mPopupX;
     private int mPopupY;
-    private int mRepeatKeyIndex = NOT_A_KEY;
+    private int mRepeatKeyIndex = NOT_A_KEY[0];
     private int mPopupLayout;
     private boolean mAbortKey;
     private AppKeyboard.Key mInvalidatedKey;
@@ -352,7 +361,9 @@ public class AppKeyboardView extends View implements View.OnClickListener {
                             }
                             break;
                         case MSG_LONGPRESS:
-                            openPopupIfRequired((MotionEvent) msg.obj);
+                            //openPopupIfRequired((MotionEvent) msg.obj);
+                            AppKeyboard.Key keyPressed = mKeys[mCurrentKey];
+                            onLongPress(keyPressed);
                             break;
                     }
                 }
@@ -412,9 +423,11 @@ public class AppKeyboardView extends View implements View.OnClickListener {
                     }
                     return false;
                 }
+
+
             });
 
-            mGestureDetector.setIsLongpressEnabled(false);
+            mGestureDetector.setIsLongpressEnabled(true);
         }
     }
 
@@ -440,7 +453,7 @@ public class AppKeyboardView extends View implements View.OnClickListener {
      */
     public void setKeyboard(AppKeyboard keyboard) {
         if (mKeyboard != null) {
-            //showPreview(NOT_A_KEY);
+           // showPreview(NOT_A_KEY[0]);
         }
         // Remove any pending messages
         removeMessages();
@@ -566,8 +579,8 @@ public class AppKeyboardView extends View implements View.OnClickListener {
     @Override
     public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         // Round up a little
-        int mPaddingRight =5;
-        int mPaddingBottom = 5;
+        int mPaddingRight =0;
+        int mPaddingBottom =0;
         if (mKeyboard == null) {
             setMeasuredDimension(mPaddingLeft + mPaddingRight, mPaddingTop + mPaddingBottom);
         } else {
@@ -600,6 +613,9 @@ public class AppKeyboardView extends View implements View.OnClickListener {
         mProximityThreshold *= mProximityThreshold; // Square it
     }
 
+    public  void setKeyBackground(Drawable keyBackground){
+        mKeyBackground = keyBackground;
+    }
 
     @Override
     public void onSizeChanged(int w, int h, int oldw, int oldh) {
@@ -687,7 +703,7 @@ public class AppKeyboardView extends View implements View.OnClickListener {
                 // For characters, use large font. For labels like "Done", use small font.
                 if (label.length() > 1 && key.codes.length < 2) {
                     paint.setTextSize(mLabelTextSize);
-                    paint.setTypeface(Typeface.DEFAULT_BOLD);
+                    paint.setTypeface(Typeface.DEFAULT);
                 }
 
                 else {
@@ -738,10 +754,150 @@ public class AppKeyboardView extends View implements View.OnClickListener {
     }
 
 
+    private void onFontDraw(ArrayList<Models.AppFonts> keys) {
+        if (mBuffer == null || mKeyboardChanged) {
+            if (mBuffer == null || mKeyboardChanged && (mBuffer.getWidth() != getWidth() || mBuffer.getHeight() != getHeight())) {
+                // Make sure our bitmap is at least 1x1
+                final int width = Math.max(1, getWidth());
+                final int height = Math.max(1, getHeight());
+                mBuffer = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+                mCanvas = new Canvas(mBuffer);
+            }
+            invalidateAllKeys();
+            mKeyboardChanged = false;
+        }
+
+        if (mKeyboard == null) return;
+
+        mCanvas.save();
+        final Canvas canvas = mCanvas;
+        canvas.clipRect(mDirtyRect);
+
+        final Paint paint = mPaint;
+        final Drawable keyBackground = mKeyBackground;
+        final Rect clipRegion = mClipRegion;
+        final Rect padding = mPadding;
+
+        final AppKeyboard.Key invalidKey = mInvalidatedKey;
+
+        // mKeyTextColor = mKeyboard.getKeyTextColor();
+        paint.setColor(mKeyTextColor);
+        boolean drawSingleKey = false;
+        if (invalidKey != null && canvas.getClipBounds(clipRegion)) {
+            // Is clipRegion completely contained within the invalidated key?
+            if (invalidKey.x /*+ kbdPaddingLeft - 1*/ <= clipRegion.left &&
+                    invalidKey.y /*+ kbdPaddingTop - 1*/ <= clipRegion.top &&
+                    invalidKey.x + invalidKey.width /*+ kbdPaddingLeft + 1*/ >= clipRegion.right &&
+                    invalidKey.y + invalidKey.height /*+ kbdPaddingTop + 1*/ >= clipRegion.bottom) {
+                drawSingleKey = true;
+            }
+        }
+        canvas.drawColor(0x00000000, PorterDuff.Mode.CLEAR);
+
+        final int keyCount = keys.size();
+        final int[] index = new int[]{0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,20,21,22,23,24,25,26};
+
+        for (int i = 0; i < keyCount; i++) {
+            final AppKeyboard.Key key = mKeys[index[i]];
+            int size = keys.get(i).getCodePoints().size();
+            key.codes = new int[size];
+            if (size>1){
+                for (int j=0;j<size;j++){
+                    key.codes[j] = keys.get(i).getCodePoints().get(j);
+                }
+            }else{
+                key.codes[0] = keys.get(i).getCodePoints().get(0);
+            }
+
+            if (key.codes.length>1){
+                key.label =  FontArray.newStrings(key.codes);
+            }else{
+                String length = String.valueOf(key.codes[0]);
+                if (length.length()>=6){
+                    key.label = FontArray.newString(key.codes[0]);
+                }else{
+                    char ch = (char) key.codes[0];
+                    key.label = Character.toString(ch);
+                }
+            }
+            //key.label = keys.get(i).getLabel();
+
+            if (drawSingleKey && invalidKey != key) {
+                continue;
+            }
+            int[] drawableState = key.getCurrentDrawableState();
+            keyBackground.setState(drawableState);
+
+            // Switch the character to uppercase if shift is pressed
+            String label = key.label.toString();/* == null? null : adjustCase(key.label).toString();*/
+
+            final Rect bounds = keyBackground.getBounds();
+            if (key.width != bounds.right || key.height != bounds.bottom) {
+                keyBackground.setBounds(0, 0, key.width, key.height);
+            }
+            canvas.translate(key.x /*+ kbdPaddingLeft*/, key.y /*+ kbdPaddingTop*/);
+            keyBackground.draw(canvas);
+
+            if (label != null) {
+                // For characters, use large font. For labels like "Done", use small font.
+                if (label.length() > 1 && key.codes.length < 2) {
+                    paint.setTextSize(mLabelTextSize);
+                    paint.setTypeface(Typeface.DEFAULT);
+                }
+
+                else {
+                    paint.setTextSize(mKeyTextSize);
+                    paint.setTypeface(Typeface.DEFAULT);
+                }
+                // Draw a drop shadow for the text
+                paint.setShadowLayer(mShadowRadius, 0, 0, mShadowColor);
+                // Draw the text
+                final float x = (key.width - padding.left - padding.right) / 2 + padding.left;
+                final float y = (key.height - padding.top - padding.bottom) / 2 + (paint.getTextSize() - paint.descent()) / 2 + padding.top;
+                canvas.drawText(label,x , y, paint);
+                // Turn off drop shadow
+                paint.setShadowLayer(0, 0, 0, 0);
+            }
+            canvas.translate(-key.x /*- kbdPaddingLeft*/, -key.y /*- kbdPaddingTop*/);
+        }
+
+        mInvalidatedKey = null;
+        // Overlay a dark rectangle to dim the keyboard
+        if (mMiniKeyboardOnScreen) {
+            paint.setColor((int) (mBackgroundDimAmount * 0xFF) << 24);
+            canvas.drawRect(0, 0, getWidth(), getHeight(), paint);
+        }
+
+        if (DEBUG && mShowTouchPoints) {
+            paint.setAlpha(128);
+            paint.setColor(0xFFFF0000);
+            canvas.drawCircle(mStartX, mStartY, 3, paint);
+            canvas.drawLine(mStartX, mStartY, mLastX, mLastY, paint);
+            paint.setColor(0xFF0000FF);
+            canvas.drawCircle(mLastX, mLastY, 3, paint);
+            paint.setColor(0xFF00FF00);
+            canvas.drawCircle((mStartX + mLastX) / 2, (mStartY + mLastY) / 2, 2, paint);
+        }
+        mCanvas.restore();
+        mDrawPending = false;
+        mDirtyRect.setEmpty();
+
+        // Hint to reallocate the buffer if the size changed
+        mKeyboardChanged = true;
+        invalidateAllKeys();
+        computeProximityThreshold(mKeyboard);
+        mMiniKeyboardCache.clear(); // Not really necessary to do every time, but will free up views
+        // Switching to a different keyboard should abort any pending keys so that the key up
+        // doesn't get delivered to the old or new keyboard
+        mAbortKey = true; // Until the next ACTION_DOWN
+    }
+
+
+
     private int getKeyIndices(int x, int y, int[] allKeys) {
         final AppKeyboard.Key[] keys = mKeys;
-        int primaryIndex = NOT_A_KEY;
-        int closestKey = NOT_A_KEY;
+        int primaryIndex = NOT_A_KEY[0];
+        int closestKey = NOT_A_KEY[0];
         int closestKeyDist = mProximityThreshold + 1;
         java.util.Arrays.fill(mDistances, Integer.MAX_VALUE);
         int [] nearestKeyIndices = mKeyboard.getNearestKeys(x, y);
@@ -754,10 +910,7 @@ public class AppKeyboardView extends View implements View.OnClickListener {
                 primaryIndex = nearestKeyIndices[i];
             }
 
-            if (((mProximityCorrectOn
-                    && (dist = key.squaredDistanceFrom(x, y)) < mProximityThreshold)
-                    || isInside)
-                    && key.codes[0] > 32) {
+            if (((mProximityCorrectOn && (dist = key.squaredDistanceFrom(x, y)) < mProximityThreshold) || isInside) && key.codes[0] > 32) {
                 // Find insertion point
                 final int nCodes = key.codes.length;
                 if (dist < closestKeyDist) {
@@ -770,10 +923,8 @@ public class AppKeyboardView extends View implements View.OnClickListener {
                 for (int j = 0; j < mDistances.length; j++) {
                     if (mDistances[j] > dist) {
                         // Make space for nCodes codes
-                        System.arraycopy(mDistances, j, mDistances, j + nCodes,
-                                mDistances.length - j - nCodes);
-                        System.arraycopy(allKeys, j, allKeys, j + nCodes,
-                                allKeys.length - j - nCodes);
+                        System.arraycopy(mDistances, j, mDistances, j + nCodes, mDistances.length - j - nCodes);
+                        System.arraycopy(allKeys, j, allKeys, j + nCodes, allKeys.length - j - nCodes);
                         for (int c = 0; c < nCodes; c++) {
                             allKeys[j + c] = key.codes[c];
                             mDistances[j + c] = dist;
@@ -783,14 +934,14 @@ public class AppKeyboardView extends View implements View.OnClickListener {
                 }
             }
         }
-        if (primaryIndex == NOT_A_KEY) {
+        if (primaryIndex == NOT_A_KEY[0]) {
             primaryIndex = closestKey;
         }
         return primaryIndex;
     }
 
     private void detectAndSendKey(int index, int x, int y, long eventTime) {
-        if (index != NOT_A_KEY && index < mKeys.length) {
+        if (index != NOT_A_KEY[0] && index < mKeys.length) {
             final AppKeyboard.Key key = mKeys[index];
             if (key.text != null) {
                 mKeyboardActionListener.onText(key.text);
@@ -799,7 +950,7 @@ public class AppKeyboardView extends View implements View.OnClickListener {
                 int code = key.codes[0];
                 //TextEntryState.keyPressedAt(key, x, y);
                 int[] codes = new int[MAX_NEARBY_KEYS];
-                Arrays.fill(codes, NOT_A_KEY);
+                Arrays.fill(codes, NOT_A_KEY[0]);
                 getKeyIndices(x, y, codes);
                 // Multi-tap
                 if (mInMultiTap) {
@@ -810,8 +961,10 @@ public class AppKeyboardView extends View implements View.OnClickListener {
                     }
                     code = key.codes[mTapCount];
                 }
-                mKeyboardActionListener.onKey(code, codes);
-                mKeyboardActionListener.onRelease(code);
+
+                mKeyboardActionListener.onKey(key.codes, codes);
+
+                mKeyboardActionListener.onRelease(key.codes);
             }
             mLastSentIndex = index;
             mLastTapTime = eventTime;
@@ -840,9 +993,9 @@ public class AppKeyboardView extends View implements View.OnClickListener {
         // Release the old key and press the new key
         final AppKeyboard.Key[] keys = mKeys;
         if (oldKeyIndex != mCurrentKeyIndex) {
-            if (oldKeyIndex != NOT_A_KEY && keys.length > oldKeyIndex) {
+            if (oldKeyIndex != NOT_A_KEY[0] && keys.length > oldKeyIndex) {
                 AppKeyboard.Key oldKey = keys[oldKeyIndex];
-                oldKey.onReleased(mCurrentKeyIndex == NOT_A_KEY);
+                oldKey.onReleased(mCurrentKeyIndex == NOT_A_KEY[0]);
                 invalidateKey(oldKeyIndex);
                 final int keyCode = oldKey.codes[0];
                 sendAccessibilityEventForUnicodeCharacter(AccessibilityEvent.TYPE_VIEW_HOVER_EXIT,
@@ -851,7 +1004,7 @@ public class AppKeyboardView extends View implements View.OnClickListener {
                 sendAccessibilityEventForUnicodeCharacter(
                         AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUS_CLEARED, keyCode);
             }
-            if (mCurrentKeyIndex != NOT_A_KEY && keys.length > mCurrentKeyIndex) {
+            if (mCurrentKeyIndex != NOT_A_KEY[0] && keys.length > mCurrentKeyIndex) {
                 AppKeyboard.Key newKey = keys[mCurrentKeyIndex];
                 newKey.onPressed();
                 invalidateKey(mCurrentKeyIndex);
@@ -867,13 +1020,13 @@ public class AppKeyboardView extends View implements View.OnClickListener {
         if (oldKeyIndex != mCurrentKeyIndex && mShowPreview) {
             mHandler.removeMessages(MSG_SHOW_PREVIEW);
             if (previewPopup.isShowing()) {
-                if (keyIndex == NOT_A_KEY) {
+                if (keyIndex == NOT_A_KEY[0]) {
                     mHandler.sendMessageDelayed(mHandler
                                     .obtainMessage(MSG_REMOVE_PREVIEW),
                             DELAY_AFTER_PREVIEW);
                 }
             }
-            if (keyIndex != NOT_A_KEY) {
+            if (keyIndex != NOT_A_KEY[0]) {
                 if (previewPopup.isShowing() && mPreviewText.getVisibility() == VISIBLE) {
                     // Show right away, if it's already visible and finger is moving around
                     showKey(keyIndex);
@@ -972,7 +1125,7 @@ public class AppKeyboardView extends View implements View.OnClickListener {
                 case AppKeyboard.KEYCODE_CANCEL:
                     text = mContext.getString(R.string.app_keyboard_view_keycode_cancel);
                     break;
-                case AppKeyboard.KEYCODE_DELETE:
+                case -5:
                     text = mContext.getString(R.string.app_keyboard_view_keycode_delete);
                     break;
                 case AppKeyboard.KEYCODE_DONE:
@@ -1041,7 +1194,7 @@ public class AppKeyboardView extends View implements View.OnClickListener {
         boolean result = onLongPress(popupKey);
         if (result) {
             mAbortKey = true;
-            //showPreview(NOT_A_KEY);
+           // showPreview(NOT_A_KEY[0]);
         }
         return result;
     }
@@ -1054,8 +1207,10 @@ public class AppKeyboardView extends View implements View.OnClickListener {
      */
     protected boolean onLongPress(AppKeyboard.Key popupKey) {
         int popupKeyboardId = popupKey.popupResId;
+        int keyCode = popupKey.codes[0];
 
-        if (popupKeyboardId != 0) {
+
+        /*if (popupKeyboardId != 0) {
             mMiniKeyboardContainer = mMiniKeyboardCache.get(popupKey);
             if (mMiniKeyboardContainer == null) {
                 LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(
@@ -1121,7 +1276,8 @@ public class AppKeyboardView extends View implements View.OnClickListener {
             //mMiniKeyboard.onTouchEvent(getTranslatedEvent(me));
             invalidateAllKeys();
             return true;
-        }
+        }*/
+
         return false;
     }
 
@@ -1211,7 +1367,7 @@ public class AppKeyboardView extends View implements View.OnClickListener {
         }
 
         if (mGestureDetector.onTouchEvent(me)) {
-            //  showPreview(NOT_A_KEY);
+            // showPreview(NOT_A_KEY[0]);
             mHandler.removeMessages(MSG_REPEAT);
             mHandler.removeMessages(MSG_LONGPRESS);
             return true;
@@ -1232,13 +1388,13 @@ public class AppKeyboardView extends View implements View.OnClickListener {
                 mLastCodeY = touchY;
                 mLastKeyTime = 0;
                 mCurrentKeyTime = 0;
-                mLastKey = NOT_A_KEY;
+                mLastKey = NOT_A_KEY[0];
                 mCurrentKey = keyIndex;
                 mDownKey = keyIndex;
                 mDownTime = me.getEventTime();
                 mLastMoveTime = mDownTime;
                 checkMultiTap(eventTime, keyIndex);
-                mKeyboardActionListener.onPress(keyIndex != NOT_A_KEY ?
+                mKeyboardActionListener.onPress(keyIndex != NOT_A_KEY[0] ?
                         mKeys[keyIndex].codes[0] : 0);
                 if (mCurrentKey >= 0 && mKeys[mCurrentKey].repeatable) {
                     mRepeatKeyIndex = mCurrentKey;
@@ -1247,28 +1403,30 @@ public class AppKeyboardView extends View implements View.OnClickListener {
                     repeatKey();
                     // Delivering the key could have caused an abort
                     if (mAbortKey) {
-                        mRepeatKeyIndex = NOT_A_KEY;
+                        mRepeatKeyIndex = NOT_A_KEY[0];
                         break;
                     }
                 }
-                if (mCurrentKey != NOT_A_KEY) {
+                if (mCurrentKey != NOT_A_KEY[0]) {
                     Message msg = mHandler.obtainMessage(MSG_LONGPRESS, me);
                     mHandler.sendMessageDelayed(msg, LONGPRESS_TIMEOUT);
                 }
-                //  showPreview(keyIndex);
+               //  showPreview(keyIndex);
                 break;
 
             case MotionEvent.ACTION_MOVE:
                 boolean continueLongPress = false;
-                if (keyIndex != NOT_A_KEY) {
-                    if (mCurrentKey == NOT_A_KEY) {
+                if (keyIndex != NOT_A_KEY[0]) {
+                    if (mCurrentKey == NOT_A_KEY[0]) {
                         mCurrentKey = keyIndex;
                         mCurrentKeyTime = eventTime - mDownTime;
                     } else {
                         if (keyIndex == mCurrentKey) {
                             mCurrentKeyTime += eventTime - mLastMoveTime;
                             continueLongPress = true;
-                        } else if (mRepeatKeyIndex == NOT_A_KEY) {
+                            /*AppKeyboard.Key languageKey = mKeys[mCurrentKey];
+                            continueLongPress = onLongPress(languageKey);*/
+                        } else if (mRepeatKeyIndex == NOT_A_KEY[0]) {
                             resetMultiTap();
                             mLastKey = mCurrentKey;
                             mLastCodeX = mLastX;
@@ -1284,12 +1442,12 @@ public class AppKeyboardView extends View implements View.OnClickListener {
                     // Cancel old longpress
                     mHandler.removeMessages(MSG_LONGPRESS);
                     // Start new longpress if key has changed
-                    if (keyIndex != NOT_A_KEY) {
+                    if (keyIndex != NOT_A_KEY[0]) {
                         Message msg = mHandler.obtainMessage(MSG_LONGPRESS, me);
                         mHandler.sendMessageDelayed(msg, LONGPRESS_TIMEOUT);
                     }
                 }
-                //  showPreview(mCurrentKey);
+                 //showPreview(mCurrentKey);
                 mLastMoveTime = eventTime;
                 break;
 
@@ -1305,25 +1463,25 @@ public class AppKeyboardView extends View implements View.OnClickListener {
                     mCurrentKeyTime = 0;
                 }
                 if (mCurrentKeyTime < mLastKeyTime && mCurrentKeyTime < DEBOUNCE_TIME
-                        && mLastKey != NOT_A_KEY) {
+                        && mLastKey != NOT_A_KEY[0]) {
                     mCurrentKey = mLastKey;
                     touchX = mLastCodeX;
                     touchY = mLastCodeY;
                 }
-                // showPreview(NOT_A_KEY);
-                Arrays.fill(mKeyIndices, NOT_A_KEY);
+                // showPreview(NOT_A_KEY[0]);
+                Arrays.fill(mKeyIndices, NOT_A_KEY[0]);
                 // If we're not on a repeating key (which sends on a DOWN event)
-                if (mRepeatKeyIndex == NOT_A_KEY && !mMiniKeyboardOnScreen && !mAbortKey) {
+                if (mRepeatKeyIndex == NOT_A_KEY[0] && !mMiniKeyboardOnScreen && !mAbortKey) {
                     detectAndSendKey(mCurrentKey, touchX, touchY, eventTime);
                 }
                 invalidateKey(keyIndex);
-                mRepeatKeyIndex = NOT_A_KEY;
+                mRepeatKeyIndex = NOT_A_KEY[0];
                 break;
             case MotionEvent.ACTION_CANCEL:
                 removeMessages();
                 dismissPopupKeyboard();
                 mAbortKey = true;
-                // showPreview(NOT_A_KEY);
+                // showPreview(NOT_A_KEY[0]);
                 invalidateKey(mCurrentKey);
                 break;
         }
@@ -1331,6 +1489,7 @@ public class AppKeyboardView extends View implements View.OnClickListener {
         mLastY = touchY;
         return true;
     }
+
 
 
     private boolean repeatKey() {
@@ -1400,14 +1559,14 @@ public class AppKeyboardView extends View implements View.OnClickListener {
 
 
     private void resetMultiTap() {
-        mLastSentIndex = NOT_A_KEY;
+        mLastSentIndex = NOT_A_KEY[0];
         mTapCount = 0;
         mLastTapTime = -1;
         mInMultiTap = false;
     }
 
     private void checkMultiTap(long eventTime, int keyIndex) {
-        if (keyIndex == NOT_A_KEY) return;
+        if (keyIndex == NOT_A_KEY[0]) return;
         AppKeyboard.Key key = mKeys[keyIndex];
         if (key.codes.length > 1) {
             mInMultiTap = true;

@@ -3,5 +3,6 @@ package com.highstarapp.fontkeyboard
 
 object Models {
 
-    data class AppFonts(val code:Int, val label:String)
+    data class AppFonts(val codePoints: MutableList<Int>/*, val label:String*/)
+
 }
