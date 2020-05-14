@@ -294,6 +294,7 @@ class SoftKeyboard: InputMethodService(), AppKeyboardView.OnKeyboardActionListen
                             else {
                                 appKeyboardView.invalidateAllKeys()
                                 appKeyboard.isShifted = caps
+
                             }
                         }
                         AppKeyboard.KEYCODE_DONE->{
