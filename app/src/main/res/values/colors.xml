@@ -10,4 +10,5 @@
 
     <color name="colorWhite">#ffffffff</color>
     <color name="colorPressed">#DFDBDB</color>
+    <color name="colorTransparent">#7F000000</color>
 </resources>

@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<fonts>
+        <fontCodePoint>
+            <code>129302</code>
+        </fontCodePoint>
+        <fontCodePoint>
+            <code>128114</code>
+        </fontCodePoint>
+        <fontCodePoint>
+            <code>128115</code>
+        </fontCodePoint>
+    <fontCodePoint>
+        <code>128115 8205 9792 65039</code>
+    </fontCodePoint>
+        <fontCodePoint>
+            <code>128110</code>
+        </fontCodePoint>
+        <fontCodePoint>
+            <code>128110 8205 9792 65039</code>
+        </fontCodePoint>
+        <fontCodePoint>
+            <code>128119</code>
+        </fontCodePoint>
+        <fontCodePoint>
+            <code>128119 8205 9792 65039</code>
+        </fontCodePoint>
+        <fontCodePoint>
+            <code>128130</code>
+        </fontCodePoint>
+        <fontCodePoint>
+            <code>128130 8205 9792 65039</code>
+        </fontCodePoint>
+        <fontCodePoint>
+            <code>128373</code>
+        </fontCodePoint>
+    <fontCodePoint>
+        <code>128373 65039 8205 9792 65039</code>
+    </fontCodePoint>
+    <fontCodePoint>
+        <code>128118</code>
+    </fontCodePoint>
+    <fontCodePoint>
+        <code>128102</code>
+    </fontCodePoint>
+    <fontCodePoint>
+        <code>128103</code>
+    </fontCodePoint>
+    <fontCodePoint>
+        <code>128104</code>
+    </fontCodePoint>
+    <fontCodePoint>
+        <code>128105</code>
+    </fontCodePoint>
+    <fontCodePoint>
+        <code>128116</code>
+    </fontCodePoint>
+    <fontCodePoint>
+        <code>128117</code>
+    </fontCodePoint>
+    <fontCodePoint>
+        <code>128113</code>
+    </fontCodePoint>
+    <fontCodePoint>
+        <code>128113 8205 9792 65039</code>
+    </fontCodePoint>
+    <fontCodePoint>
+        <code>128124</code>
+    </fontCodePoint>
+    <fontCodePoint>
+        <code>129328</code>
+    </fontCodePoint>
+    <fontCodePoint>
+        <code>129331</code>
+    </fontCodePoint>
+    <fontCodePoint>
+        <code>128120</code>
+    </fontCodePoint>
+    <fontCodePoint>
+        <code>129332</code>
+    </fontCodePoint>
+
+
+</fonts>

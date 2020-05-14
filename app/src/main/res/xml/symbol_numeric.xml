@@ -31,7 +31,7 @@
     </Row>
 
     <Row>
-        <Key app:codes="-102" app:isModifier="true" app:isSticky="true" app:keyLabel="1/2" app:keyWidth="12%p" app:keyEdgeFlags="left" />
+        <Key app:codes="-102" app:isModifier="true" app:isSticky="true" app:keyLabel="1/2" app:keyWidth="13%p" app:keyEdgeFlags="left" />
         <Key app:codes="45" app:keyLabel="-"/>
         <Key app:codes="39" app:keyLabel="\'"/>
         <Key app:codes="34" app:keyLabel="&quot;"/>
@@ -39,16 +39,16 @@
         <Key app:codes="58" app:keyLabel=":"/>
         <Key app:codes="59" app:keyLabel=";"/>
         <Key app:codes="63" app:keyLabel="?"/>
-        <Key app:codes="-5" app:keyIcon="@drawable/backspace_icon"  app:keyWidth="12%p" app:isRepeatable="true" app:keyEdgeFlags="right"/>
+        <Key app:codes="-5" app:keyIcon="@drawable/ic_backspace_black_24dp"  app:keyWidth="13%p" app:isRepeatable="true" app:keyEdgeFlags="right"/>
     </Row>
 
 
     <Row>
         <Key app:codes="-2" app:keyLabel="!#1" app:keyWidth="13%p" app:keyEdgeFlags="left"/>
         <Key app:codes="44" app:keyLabel="," />
-        <Key app:codes="-101" app:keyIcon="@drawable/language_icon" />
-        <Key app:codes="32" app:keyIcon="@drawable/spacebar_icon" app:keyWidth="30%p" app:isRepeatable="true" />
+        <Key app:codes="204" app:keyIcon="@drawable/ic_language_black_24dp" />
+        <Key app:codes="32" app:keyIcon="@drawable/ic_space_bar_black_24dp" app:keyWidth="37.5%p" app:isRepeatable="true" />
         <Key app:codes="46" app:keyLabel="." />
-        <Key app:codes="10"  app:keyIcon="@drawable/keyboard_return_icon" app:keyWidth="13%p" app:keyEdgeFlags="right" />
+        <Key app:codes="-4"  app:keyIcon="@drawable/ic_keyboard_return_black_24dp" app:keyWidth="13%p" app:keyEdgeFlags="right" />
     </Row>
 </AppKeyboard>

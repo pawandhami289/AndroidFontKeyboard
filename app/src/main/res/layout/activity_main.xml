@@ -17,19 +17,20 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="30dp"
+            android:fontFamily="sans-serif"
+            android:gravity="center"
             android:text="Setup Font Keyboard"
             android:textSize="22sp"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="30dp"
-            android:gravity="center"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorSelected"
             android:textColor="@color/colorWhite"
-            android:layout_margin="30dp"
+            android:layout_margin="20dp"
             android:id="@+id/setupKeyboard"
             android:text="ENABLE FONTS KEYBOARD"/>
 
@@ -38,7 +39,7 @@
             android:layout_height="wrap_content"
             android:background="@color/colorSelected"
             android:textColor="@color/colorWhite"
-            android:layout_margin="30dp"
+            android:layout_margin="20dp"
             android:id="@+id/selectKeyboard"
             android:text="SELECT FONTS KEYBOARD"/>
 
@@ -47,7 +48,7 @@
             android:layout_height="wrap_content"
             android:hint="Welcome to Font Keyboard"
             android:id="@+id/tvKeyboard"
-            android:layout_margin="20dp"
+            android:layout_margin="30dp"
             />
 
     </LinearLayout>

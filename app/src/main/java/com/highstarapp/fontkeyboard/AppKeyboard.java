@@ -2,6 +2,7 @@ package com.highstarapp.fontkeyboard;
 
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.content.res.XmlResourceParser;
@@ -39,8 +40,10 @@ class AppKeyboard {
     public static final int KEYCODE_MODE_CHANGE = -2;
     public static final int KEYCODE_CANCEL = -3;
     public static final int KEYCODE_DONE = -4;
-    public static final int KEYCODE_DELETE = -5;
+    public static final int[] KEYCODE_DELETE = new int[]{-5};
     public static final int KEYCODE_ALT = -6;
+    public static final int KEYCODE_MODE_CHARACTERS_NUMERIC = -102;
+    public static final int KEYCODE_LANGUAGE_SWITCH = 204;
 
     /** Keyboard label **/
     private CharSequence mLabel;
@@ -111,6 +114,7 @@ class AppKeyboard {
 
     private ArrayList<Row> rows = new ArrayList<Row>();
 
+    private Context mContext;
 
 
 
@@ -387,7 +391,7 @@ class AppKeyboard {
                 try {
                     values[count++] = Integer.parseInt(st.nextToken());
                 } catch (NumberFormatException nfe) {
-                    Log.e(TAG, "Error parsing keycodes " + value);
+                    Log.e(TAG, "Error parsing key codes " + value);
                 }
             }
             return values;
@@ -502,6 +506,7 @@ class AppKeyboard {
      * @param modeId keyboard mode identifier
      */
     public AppKeyboard(Context context, @XmlRes int xmlLayoutResId, int modeId) {
+        this.mContext = context;
         DisplayMetrics dm = context.getResources().getDisplayMetrics();
         mDisplayWidth = dm.widthPixels;
         mDisplayHeight = dm.heightPixels;
@@ -779,8 +784,10 @@ class AppKeyboard {
                         inKey = true;
                         key = createKeyFromXml(res, currentRow, x, y, parser);
                         mKeys.add(key);
+
                         if (key.codes[0] == KEYCODE_SHIFT) {
                             // Find available shift key slot and put this shift key in it
+
                             for (int i = 0; i < mShiftKeys.length; i++) {
                                 if (mShiftKeys[i] == null) {
                                     mShiftKeys[i] = key;
@@ -793,6 +800,7 @@ class AppKeyboard {
                         else if (key.codes[0] == KEYCODE_ALT) {
                             mModifierKeys.add(key);
                         }
+                        assert currentRow != null;
                         currentRow.mKeys.add(key);
                     }
                     else if (TAG_KEYBOARD.equals(tag)) {
@@ -817,6 +825,7 @@ class AppKeyboard {
                         // TODO: error or extend?
                     }
                 }
+
             }
         } catch (Exception e) {
             Log.e(TAG, "Parse error:" + e);
@@ -843,13 +852,23 @@ class AppKeyboard {
         mDefaultWidth = getDimensionOrFraction(a,
                 R.styleable.AppKeyboard_keyWidth,
                 mDisplayWidth, mDisplayWidth / 10);
-        mDefaultHeight = getDimensionOrFraction(a,
-                R.styleable.AppKeyboard_keyHeight,
-                mDisplayHeight, 50);
+
+        if (mContext!=null) {
+            int orientation = mContext.getResources().getConfiguration().orientation;
+            if (orientation== Configuration.ORIENTATION_PORTRAIT){
+                mDefaultHeight = getDimensionOrFraction(a,
+                        R.styleable.AppKeyboard_keyHeight,
+                        mDisplayHeight, 50);
+            }else{
+                mDefaultHeight = mDisplayHeight/13;
+            }
+        }
+
         int gap = ((mDisplayWidth-(mDefaultWidth*10))/10)-2;
         mDefaultHorizontalGap = getDimensionOrFraction(a,
                 R.styleable.AppKeyboard_horizontalGap,
                 mDisplayWidth, gap);
+
         mDefaultVerticalGap = getDimensionOrFraction(a,
                 R.styleable.AppKeyboard_verticalGap,
                 mDisplayHeight, 20);
@@ -870,7 +889,5 @@ class AppKeyboard {
         }
         return defValue;
     }
-
-
 
 }

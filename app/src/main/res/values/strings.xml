@@ -20,6 +20,7 @@
     <string name="select_language">Select input languages</string>
     <string name="general_category">General</string>
     <string name="app_name">Font Keyboard</string>
+    <string name="ok">Ok</string>
     <string name="app_keyboard_view_keycode_alt">ALT</string>
     <string name="app_keyboard_view_keycode_cancel">Cancel</string>
     <string name="app_keyboard_view_keycode_delete">Delete</string>
@@ -27,6 +28,58 @@
     <string name="app_keyboard_view_keycode_mode_change">ModeChange</string>
     <string name="app_keyboard_view_keycode_shift">Shift</string>
     <string name="app_keyboard_view_keycode_enter">Enter</string>
+    <string name="info_text">You can switch to another keyboard by long pressing on this button, this will show the list of available keyboards</string>
 
 
+    <string-array name="fontName">
+        <item>Share App</item>
+        <item>Normal</item>
+        <item>Emoji1</item>
+        <item>Emoji2</item>
+        <item>Emoji3</item>
+        <item>Emoji4</item>
+        <item>Emoji5</item>
+        <item>ⓢ☿♔♭⊙↳ⓢ</item>
+        <item>sᴍᴀʟʟ ᴄᴀᴘs</item>
+        <item>₵ɄⱤⱤɆ₦₵Ɏ</item>
+        <item>🆂🆀🆄🅰🆁🅴🆂</item>
+        <item>𝓑𝓸𝓵𝓭 𝓲𝓽𝓪𝓵𝓲𝓬</item>
+        <item>𝕆𝕦𝕥𝕝𝕚𝕟𝕖</item>
+        <item>🅒🅘🅡🅒🅛🅔🅢</item>
+        <item>Ďïŕẗÿ</item>
+        <item>ᎦᏗᎥᏒᎩ</item>
+        <item>Яц$їfч</item>
+        <item>Ⓒⓘⓡⓒⓛⓔⓢ</item>
+        <item>A͎r͎r͎o͎w͎</item>
+        <item>𝔉𝖗𝖆𝖐𝖙𝖚𝖗</item>
+        <item>I҉n҉v҉i҉s҉i҉b҉l҉e҉ i҉n҉k҉</item>
+        <item>𝚃𝚢𝚙𝚎𝚠𝚛𝚒𝚝𝚎𝚛</item>
+        <item>🅂🅀🅄🄰🅁🄴🅂</item>
+    </string-array>
+
+    <string-array name="xmlFontNames">
+        <item>shareApp</item>
+        <item>qwerty_normal.xml</item>
+        <item>emoji1.xml</item>
+        <item>emoji2.xml</item>
+        <item>emoji3.xml</item>
+        <item>emoji4.xml</item>
+        <item>emoji5.xml</item>
+        <item>symbol.xml</item>
+        <item>small_caps.xml</item>
+        <item>currency.xml</item>
+        <item>black_square.xml</item>
+        <item>bold_script.xml</item>
+        <item>double_struck.xml</item>
+        <item>black_bubble.xml</item>
+        <item>dirty.xml</item>
+        <item>fairy.xml</item>
+        <item>rusify.xml</item>
+        <item>white_bubble.xml</item>
+        <item>arrow.xml</item>
+        <item>fraktur.xml</item>
+        <item>invisible_ink.xml</item>
+        <item>typewriter.xml</item>
+        <item>white_square.xml</item>
+    </string-array>
 </resources>
