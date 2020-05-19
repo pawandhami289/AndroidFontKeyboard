@@ -31,55 +31,53 @@
     <string name="info_text">You can switch to another keyboard by long pressing on this button, this will show the list of available keyboards</string>
 
 
-    <string-array name="fontName">
-        <item>Share App</item>
-        <item>Normal</item>
-        <item>Emoji1</item>
-        <item>Emoji2</item>
-        <item>Emoji3</item>
-        <item>Emoji4</item>
-        <item>Emoji5</item>
-        <item>ⓢ☿♔♭⊙↳ⓢ</item>
-        <item>sᴍᴀʟʟ ᴄᴀᴘs</item>
-        <item>₵ɄⱤⱤɆ₦₵Ɏ</item>
-        <item>🆂🆀🆄🅰🆁🅴🆂</item>
-        <item>𝓑𝓸𝓵𝓭 𝓲𝓽𝓪𝓵𝓲𝓬</item>
-        <item>𝕆𝕦𝕥𝕝𝕚𝕟𝕖</item>
-        <item>🅒🅘🅡🅒🅛🅔🅢</item>
-        <item>Ďïŕẗÿ</item>
-        <item>ᎦᏗᎥᏒᎩ</item>
-        <item>Яц$їfч</item>
-        <item>Ⓒⓘⓡⓒⓛⓔⓢ</item>
-        <item>A͎r͎r͎o͎w͎</item>
-        <item>𝔉𝖗𝖆𝖐𝖙𝖚𝖗</item>
-        <item>I҉n҉v҉i҉s҉i҉b҉l҉e҉ i҉n҉k҉</item>
-        <item>𝚃𝚢𝚙𝚎𝚠𝚛𝚒𝚝𝚎𝚛</item>
-        <item>🅂🅀🅄🄰🅁🄴🅂</item>
-    </string-array>
-
     <string-array name="xmlFontNames">
-        <item>shareApp</item>
+        <item>WebApp</item>
         <item>qwerty_normal.xml</item>
-        <item>emoji1.xml</item>
-        <item>emoji2.xml</item>
-        <item>emoji3.xml</item>
-        <item>emoji4.xml</item>
-        <item>emoji5.xml</item>
-        <item>symbol.xml</item>
         <item>small_caps.xml</item>
         <item>currency.xml</item>
         <item>black_square.xml</item>
         <item>bold_script.xml</item>
+        <item>bold_font.xml</item>
         <item>double_struck.xml</item>
         <item>black_bubble.xml</item>
         <item>dirty.xml</item>
         <item>fairy.xml</item>
         <item>rusify.xml</item>
+        <item>lightning.xml</item>
+        <item>special.xml</item>
+        <item>bridge_below.xml</item>
+        <item>bridge_above.xml</item>
         <item>white_bubble.xml</item>
+        <item>plus_below.xml</item>
         <item>arrow.xml</item>
+        <item>face_smile.xml</item>
+        <item>upside_down.xml</item>
+        <item>stinky.xml</item>
+        <item>slash.xml</item>
+        <item>underline.xml</item>
+        <item>double_underline.xml</item>
+        <item>fraktur_bold.xml</item>
         <item>fraktur.xml</item>
         <item>invisible_ink.xml</item>
+        <item>double_xx.xml</item>
         <item>typewriter.xml</item>
+        <item>strike.xml</item>
+        <item>asterisk.xml</item>
         <item>white_square.xml</item>
+        <item>emoji1.xml</item>
+        <item>emoji2.xml</item>
+        <item>emoji3.xml</item>
+        <item>emoji4.xml</item>
+        <item>emoji5.xml</item>
+        <item>emoji6.xml</item>
+        <item>emoji7.xml</item>
+        <item>emoji8.xml</item>
+        <item>hands.xml</item>
+        <item>symbol.xml</item>
+        <!--<item>black_bracket.xml</item>
+        <item>white_bracket.xml</item>
+        <item>love.xml</item>-->
+
     </string-array>
 </resources>

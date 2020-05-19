@@ -238,30 +238,30 @@ class AppKeyboard {
 
 
         private final static int[] KEY_STATE_NORMAL_ON = {
-                android.R.attr.state_checkable,
-                android.R.attr.state_checked
+                R.attr.state_checkable,
+                R.attr.state_checked
         };
 
         private final static int[] KEY_STATE_PRESSED_ON = {
-                android.R.attr.state_pressed,
-                android.R.attr.state_checkable,
-                android.R.attr.state_checked
+                R.attr.state_pressed,
+                R.attr.state_checkable,
+                R.attr.state_checked
         };
 
         private final static int[] KEY_STATE_NORMAL_OFF = {
-                android.R.attr.state_checkable
+                R.attr.state_checkable
         };
 
         private final static int[] KEY_STATE_PRESSED_OFF = {
-                android.R.attr.state_pressed,
-                android.R.attr.state_checkable
+                R.attr.state_pressed,
+                R.attr.state_checkable
         };
 
         private final static int[] KEY_STATE_NORMAL = {
         };
 
         private final static int[] KEY_STATE_PRESSED = {
-                android.R.attr.state_pressed
+                R.attr.state_pressed
         };
 
         /** Create an empty key with no attributes. */
@@ -349,6 +349,7 @@ class AppKeyboard {
          */
         public void onPressed() {
             pressed = !pressed;
+
         }
 
         /**
@@ -804,7 +805,7 @@ class AppKeyboard {
                         currentRow.mKeys.add(key);
                     }
                     else if (TAG_KEYBOARD.equals(tag)) {
-                        parseKeyboardAttributes(res, parser);
+                        parseKeyboardAttributes(res, parser,currentRow);
                     }
                 }
                 else if (event == XmlResourceParser.END_TAG) {
@@ -845,7 +846,7 @@ class AppKeyboard {
         }
     }
 
-    private void parseKeyboardAttributes(Resources res, XmlResourceParser parser) {
+    private void parseKeyboardAttributes(Resources res, XmlResourceParser parser, Row currentRow) {
         TypedArray a = res.obtainAttributes(Xml.asAttributeSet(parser),
                 R.styleable.AppKeyboard);
 
@@ -860,18 +861,15 @@ class AppKeyboard {
                         R.styleable.AppKeyboard_keyHeight,
                         mDisplayHeight, 50);
             }else{
-                mDefaultHeight = mDisplayHeight/13;
+                mDefaultHeight = mDisplayHeight/10;
             }
         }
-
-        int gap = ((mDisplayWidth-(mDefaultWidth*10))/10)-2;
-        mDefaultHorizontalGap = getDimensionOrFraction(a,
-                R.styleable.AppKeyboard_horizontalGap,
-                mDisplayWidth, gap);
+            int gap = ((mDisplayWidth - (mDefaultWidth * 10)) / 10) -3;
+            mDefaultHorizontalGap = getDimensionOrFraction(a, R.styleable.AppKeyboard_horizontalGap, mDisplayWidth, gap);
 
         mDefaultVerticalGap = getDimensionOrFraction(a,
                 R.styleable.AppKeyboard_verticalGap,
-                mDisplayHeight, 20);
+                mDisplayHeight, 25);
         mProximityThreshold = (int) (mDefaultWidth * SEARCH_DISTANCE);
         mProximityThreshold = mProximityThreshold * mProximityThreshold; // Square it for comparison
         a.recycle();

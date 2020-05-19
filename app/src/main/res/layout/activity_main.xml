@@ -12,7 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:context=".MainActivity"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -22,16 +24,17 @@
             android:fontFamily="sans-serif"
             android:gravity="center"
             android:text="Setup Font Keyboard"
-            android:textSize="22sp"
+            android:textSize="@dimen/main_activity_text_ize"
             android:textStyle="bold" />
 
         <Button
             android:layout_width="match_parent"
+            android:layout_gravity="center"
             android:layout_height="wrap_content"
             android:background="@color/colorSelected"
             android:textColor="@color/colorWhite"
-            android:layout_margin="20dp"
             android:id="@+id/setupKeyboard"
+            android:textSize="@dimen/main_activity_view_ize"
             android:text="ENABLE FONTS KEYBOARD"/>
 
         <Button
@@ -39,7 +42,9 @@
             android:layout_height="wrap_content"
             android:background="@color/colorSelected"
             android:textColor="@color/colorWhite"
-            android:layout_margin="20dp"
+            android:layout_marginTop="@dimen/margin10"
+            android:textSize="@dimen/main_activity_view_ize"
+            android:layout_gravity="center"
             android:id="@+id/selectKeyboard"
             android:text="SELECT FONTS KEYBOARD"/>
 
@@ -48,7 +53,9 @@
             android:layout_height="wrap_content"
             android:hint="Welcome to Font Keyboard"
             android:id="@+id/tvKeyboard"
-            android:layout_margin="30dp"
+            android:textSize="@dimen/main_activity_view_ize"
+            android:layout_marginTop="30dp"
+            android:inputType="textMultiLine"
             />
 
     </LinearLayout>

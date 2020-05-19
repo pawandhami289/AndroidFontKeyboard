@@ -1,83 +1,82 @@
 <?xml version="1.0"?>
 <fonts>
         <fontCodePoint>
-            <code>128154</code>
+            <code>9996</code>
         </fontCodePoint>
         <fontCodePoint>
-            <code>129505</code>
+            <code>128072</code>
         </fontCodePoint>
         <fontCodePoint>
-            <code>10084 65039 65039</code>
-        </fontCodePoint>
-    <fontCodePoint>
-        <code>128148</code>
-    </fontCodePoint>
-        <fontCodePoint>
-            <code>128151</code>
+            <code>128072</code>
         </fontCodePoint>
         <fontCodePoint>
-            <code>128147</code>
+            <code>128591</code>
         </fontCodePoint>
         <fontCodePoint>
-            <code>128149</code>
+            <code>09997</code>
         </fontCodePoint>
         <fontCodePoint>
-            <code>128150</code>
+            <code>128075</code>
         </fontCodePoint>
         <fontCodePoint>
-            <code>128158</code>
+            <code>128074</code>
         </fontCodePoint>
         <fontCodePoint>
-            <code>128152</code>
+            <code>128076</code>
         </fontCodePoint>
         <fontCodePoint>
-            <code>10083 65039</code>
+            <code>128077</code>
+        </fontCodePoint>
+        <fontCodePoint>
+            <code>128078</code>
         </fontCodePoint>
     <fontCodePoint>
-        <code>128157</code>
+        <code>09994</code>
     </fontCodePoint>
     <fontCodePoint>
-        <code>128140</code>
+        <code>09995</code>
     </fontCodePoint>
     <fontCodePoint>
-        <code>128139</code>
+        <code>128071</code>
     </fontCodePoint>
     <fontCodePoint>
-        <code>128570</code>
+        <code>128405</code>
     </fontCodePoint>
     <fontCodePoint>
-        <code>128568</code>
+        <code>09757</code>
     </fontCodePoint>
     <fontCodePoint>
-        <code>128571</code>
+        <code>128079</code>
     </fontCodePoint>
     <fontCodePoint>
-        <code>128573</code>
+        <code>128080</code>
     </fontCodePoint>
     <fontCodePoint>
-        <code>128576</code>
+        <code>128588</code>
     </fontCodePoint>
     <fontCodePoint>
-        <code>128569</code>
+        <code>128133</code>
     </fontCodePoint>
     <fontCodePoint>
-        <code>128575</code>
+        <code>128171</code>
     </fontCodePoint>
     <fontCodePoint>
-        <code>128069</code>
+        <code>128166</code>
     </fontCodePoint>
     <fontCodePoint>
-        <code>128068</code>
+        <code>128005</code>
     </fontCodePoint>
     <fontCodePoint>
-        <code>128067</code>
+        <code>128006</code>
     </fontCodePoint>
     <fontCodePoint>
-        <code>128066</code>
+        <code>128014</code>
     </fontCodePoint>
     <fontCodePoint>
-        <code>128064</code>
+        <code>128049</code>
     </fontCodePoint>
-
+    <fontCodePoint>
+        <code>128004</code>
+    </fontCodePoint>
 
 </fonts>
