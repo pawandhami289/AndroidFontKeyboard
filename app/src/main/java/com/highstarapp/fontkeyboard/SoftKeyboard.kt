@@ -97,7 +97,6 @@ class SoftKeyboard: InputMethodService(), AppKeyboardView.OnKeyboardActionListen
 
     //parse xml files from assets folder to get code points of unicode character.
     private fun parseXmlFont(fontXmlFile: String,fontLabel:String){
-        if (fontPosition!=0)
         saveKeyboard(fontXmlFile,fontLabel,fontPosition.toString())
         val inputStream = assets.open(fontXmlFile)
         val dbFactory = DocumentBuilderFactory.newInstance()
@@ -273,7 +272,69 @@ class SoftKeyboard: InputMethodService(), AppKeyboardView.OnKeyboardActionListen
             }
             textView.setOnClickListener {
                 /*if (i!=0){*/
-                setFontsAccordingToAppPurchase(i,textView,buttonViewList)
+                try{
+                    if (isAppPurchased){//is user purchased
+                        fontPosition = i
+                        if (fontPosition != alreadySelectedPosition) {//if user tap the already selected position
+                            caps = false
+                            updateShiftKey()
+                            alreadySelectedPosition = fontPosition
+                            textView.setTextColor(ContextCompat.getColor(this, R.color.colorWhite))
+                            textView.setBackgroundColor(ContextCompat.getColor(this, R.color.colorSelected))
+                            if (appKeyboardView.keyboard == qwertyKeyboard) parseXmlFont(fontXmlArray[i], Constant.CODE)
+                            else saveKeyboard(fontXmlArray[i], Constant.CODE, fontPosition.toString())
+                            for (j in 0 until buttonViewList.size) {
+                                val textView1 = buttonViewList[j]
+                                if (textView1.id != textView.id) {
+                                    textView1.setTextColor(ContextCompat.getColor(this, R.color.colorBlack))
+                                    textView1.setBackgroundColor(ContextCompat.getColor(this, R.color.colorWhite))
+                                }
+                            }
+                        }
+                    }
+                    else{//if user not purchased
+                        if (i<10) {
+                            fontPosition = i
+                            if (fontPosition != alreadySelectedPosition) {//if user tap the already selected position
+                                caps = false
+                                updateShiftKey()
+                                alreadySelectedPosition = fontPosition
+                                textView.setTextColor(ContextCompat.getColor(this, R.color.colorWhite))
+                                textView.setBackgroundColor(
+                                    ContextCompat.getColor(
+                                        this,
+                                        R.color.colorSelected
+                                    )
+                                )
+                                if (appKeyboardView.keyboard == qwertyKeyboard) parseXmlFont(fontXmlArray[i], Constant.CODE)
+                                else saveKeyboard(fontXmlArray[i], Constant.CODE, fontPosition.toString())
+                                for (j in 0 until buttonViewList.size) {
+                                    val textView1 = buttonViewList[j]
+                                    if (textView1.id != textView.id && j < 10) {
+                                        textView1.setTextColor(
+                                            ContextCompat.getColor(
+                                                this,
+                                                R.color.colorBlack
+                                            )
+                                        )
+                                        textView1.setBackgroundColor(
+                                            ContextCompat.getColor(
+                                                this,
+                                                R.color.colorWhite
+                                            )
+                                        )
+                                    }
+                                }
+                            }
+                        }else{
+                            val intent = Intent(this,InAppPurchase::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                            startActivity(intent)
+                        }
+                    }
+                }catch(e:java.lang.Exception){
+                    e.printStackTrace()
+                }
                // }
                 /*else{
                     try{
