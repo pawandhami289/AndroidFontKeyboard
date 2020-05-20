@@ -19,7 +19,7 @@
     </Row>
 
     <Row >
-        <Key app:codes="97" app:keyLabel="a"  app:keyEdgeFlags="left" app:horizontalGap="7.2%p"/>
+        <Key app:codes="97" app:keyLabel="a"  app:keyEdgeFlags="left" app:horizontalGap="7%p"/>
         <Key app:codes="115" app:keyLabel="s" />
         <Key app:codes="100" app:keyLabel="d" />
         <Key app:codes="102" app:keyLabel="f" />

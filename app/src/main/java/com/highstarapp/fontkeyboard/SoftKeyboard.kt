@@ -20,6 +20,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import com.android.billingclient.api.*
 import org.w3c.dom.Document
 import org.w3c.dom.Element
 import org.w3c.dom.Node
@@ -54,11 +55,17 @@ class SoftKeyboard: InputMethodService(), AppKeyboardView.OnKeyboardActionListen
     private val fontCharacterArray:ArrayList<Models.AppFonts> = ArrayList()//holds selected font code points, which is used to draw character and output character.
     private var fontXmlArray = arrayOf<String>()//holds font code points from assets folder(location: app/assets)
     private var fontPosition : Int = 0//current selected font position
-    private var alreadySelectedPosition : Int = 0//current selected font position
+    private var alreadySelectedPosition : Int = -1//current selected font position
     private lateinit var  document : Document//parse xml file
     private  var editorInfo: EditorInfo?=null// get the other apps editor info
+    private var isAppPurchased: Boolean = false
 
 
+
+
+
+
+    //get names of fonts from xml and set to text view , in function inflateFontsView()
     private fun parseXmlFontNames(){
         val inputStream = assets.open(Constant.FONT_NAME_XML)
         val dbFactory = DocumentBuilderFactory.newInstance()
@@ -232,7 +239,8 @@ class SoftKeyboard: InputMethodService(), AppKeyboardView.OnKeyboardActionListen
                val len: Int = intArray[0]
             }
             textView.id = i+1
-            textView.setPadding(35, 16, 35, 16)
+            if (textView.text.length<=6)textView.setPadding(55, 16, 55, 16)
+                else textView.setPadding(35, 16, 35, 16)
             textView.layoutParams = textViewParams
             cardView.addView(textView)
             fontsContainer.addView(cardView)
@@ -249,8 +257,9 @@ class SoftKeyboard: InputMethodService(), AppKeyboardView.OnKeyboardActionListen
                     textView.setTextColor(ContextCompat.getColor(this, R.color.colorBlack))
                     textView.setBackgroundColor(ContextCompat.getColor(this, R.color.colorWhite))
                 }
-            }else {
-                if (i == 1) {
+            }
+            else {
+                if (i == 0) {
                     textView.setTextColor(ContextCompat.getColor(this, R.color.colorWhite))
                     textView.setBackgroundColor(ContextCompat.getColor(this, R.color.colorSelected))
                 } else {
@@ -258,14 +267,62 @@ class SoftKeyboard: InputMethodService(), AppKeyboardView.OnKeyboardActionListen
                     textView.setBackgroundColor(ContextCompat.getColor(this, R.color.colorWhite))
                 }
             }
-
+            if (i>6  && !isAppPurchased){//if user not purchased execute this, else  do nothing
+                textView.setTextColor(ContextCompat.getColor(this, R.color.colorBlack))
+                textView.setBackgroundColor(ContextCompat.getColor(this, R.color.colorTransparent))
+            }
             textView.setOnClickListener {
-                if (i!=0){
+                /*if (i!=0){*/
+                setFontsAccordingToAppPurchase(i,textView,buttonViewList)
+               // }
+                /*else{
+                    try{
+                        val webPage: Uri = Uri.parse(Constant.WEB_URL)
+                        val intent = Intent(Intent.ACTION_VIEW, webPage)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        if (intent.resolveActivity(packageManager) != null) {
+                            startActivity(intent)
+                        }
+                    }catch (e:Exception){
+                        e.printStackTrace()
+                    }
+                }*/
+            }
+        }
+    }catch (e:java.lang.Exception){
+        e.printStackTrace()
+    }
+    }
+
+    //some fonts disabled and some fonts are enabled.
+    private fun setFontsAccordingToAppPurchase(i:Int,textView:TextView,buttonViewList: MutableList<TextView>){
+        try{
+            if (isAppPurchased){//is user purchased
+                fontPosition = i
+                if (fontPosition != alreadySelectedPosition) {//if user tap the already selected position
+                    caps = false
+                    updateShiftKey()
+                    alreadySelectedPosition = fontPosition
+                    textView.setTextColor(ContextCompat.getColor(this, R.color.colorWhite))
+                    textView.setBackgroundColor(ContextCompat.getColor(this, R.color.colorSelected))
+                    if (appKeyboardView.keyboard == qwertyKeyboard) parseXmlFont(fontXmlArray[i], Constant.CODE)
+                    else saveKeyboard(fontXmlArray[i], Constant.CODE, fontPosition.toString())
+                    for (j in 0 until buttonViewList.size) {
+                        val textView1 = buttonViewList[j]
+                            if (textView1.id != textView.id) {
+                                textView1.setTextColor(ContextCompat.getColor(this, R.color.colorBlack))
+                                textView1.setBackgroundColor(ContextCompat.getColor(this, R.color.colorWhite))
+                            }
+                    }
+                }
+            }
+            else{//if user not purchased
+                if (i<10) {
                     fontPosition = i
-                    if (fontPosition!=alreadySelectedPosition) {//if user tap the already selected position
-                        caps=false
+                    if (fontPosition != alreadySelectedPosition) {//if user tap the already selected position
+                        caps = false
                         updateShiftKey()
-                        alreadySelectedPosition=fontPosition
+                        alreadySelectedPosition = fontPosition
                         textView.setTextColor(ContextCompat.getColor(this, R.color.colorWhite))
                         textView.setBackgroundColor(
                             ContextCompat.getColor(
@@ -280,7 +337,7 @@ class SoftKeyboard: InputMethodService(), AppKeyboardView.OnKeyboardActionListen
                         else saveKeyboard(fontXmlArray[i], Constant.CODE, fontPosition.toString())
                         for (j in 0 until buttonViewList.size) {
                             val textView1 = buttonViewList[j]
-                            if (textView1.id != textView.id) {
+                            if (textView1.id != textView.id && j < 10) {
                                 textView1.setTextColor(
                                     ContextCompat.getColor(
                                         this,
@@ -297,22 +354,14 @@ class SoftKeyboard: InputMethodService(), AppKeyboardView.OnKeyboardActionListen
                         }
                     }
                 }else{
-                    try{
-                        val webPage: Uri = Uri.parse(Constant.WEB_URL)
-                        val intent = Intent(Intent.ACTION_VIEW, webPage)
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                        if (intent.resolveActivity(packageManager) != null) {
-                            startActivity(intent)
-                        }
-                    }catch (e:Exception){
-                        e.printStackTrace()
-                    }
+                    val intent = Intent(this,InAppPurchase::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    startActivity(intent)
                 }
             }
+        }catch(e:java.lang.Exception){
+            e.printStackTrace()
         }
-    }catch (e:java.lang.Exception){
-        e.printStackTrace()
-    }
     }
 
     //called after onCreate() method. initialize the basic setup
@@ -378,8 +427,6 @@ class SoftKeyboard: InputMethodService(), AppKeyboardView.OnKeyboardActionListen
        // Log.e("onStartInputView:", info.imeOptions.toString())
     }
 
-    private val outPutTextList: MutableList<Int> = mutableListOf()
-    private var outputText: StringBuilder = StringBuilder()
     //when key is pressed, more  info on AppKeyboardView
     override fun onKey(primaryCode: IntArray?, keyCodes: IntArray?) {
         val inputConnection : InputConnection = currentInputConnection
@@ -388,7 +435,7 @@ class SoftKeyboard: InputMethodService(), AppKeyboardView.OnKeyboardActionListen
                 if (primaryCode!!.size>1){
                     val codePint: IntArray = primaryCode
                     val stringBuilder = UnicodeUtils.bindMultipleCodePoints(codePint)
-                    inputConnection.commitText(stringBuilder.trim(),1)
+                    inputConnection.commitText(stringBuilder,1)
 
                 }
                 else{
@@ -462,7 +509,6 @@ class SoftKeyboard: InputMethodService(), AppKeyboardView.OnKeyboardActionListen
                                 val composingText: String = UnicodeUtils.bindSingleCodePoint(pCode)
                                 inputConnection.commitText(composingText,1)
                                 // inputConnection.setComposingText(FontArray.setChar(),1)
-
                             }else{
                                 //for decimal code point of utf-8 unicode characters
                                 inputConnection.commitText(code.toString(),1)

@@ -5,7 +5,7 @@
     <dimen name="key_text_size">22dp</dimen>
     <dimen name="key_text_size_small">13dp</dimen>
     <dimen name="main_activity_text_ize">20dp</dimen>
-    <dimen name="main_activity_view_ize">20dp</dimen>
+    <dimen name="main_activity_view_ize">16dp</dimen>
     <dimen name="font_label_text_size">5dp</dimen>
    <dimen name="corner_radius0">0dp</dimen>
    <dimen name="corner_radius5">5dp</dimen>

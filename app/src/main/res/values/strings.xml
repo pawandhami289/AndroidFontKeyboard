@@ -32,8 +32,9 @@
 
 
     <string-array name="xmlFontNames">
-        <item>WebApp</item>
+        <!--<item>WebApp</item>-->
         <item>qwerty_normal.xml</item>
+        <item>tiny.xml</item>
         <item>small_caps.xml</item>
         <item>currency.xml</item>
         <item>black_square.xml</item>

@@ -1,103 +1,105 @@
 <?xml version="1.0"?>
 <fonts>
+     32  32  32  32  32  32  32  32  32  32  32  32  32
+     32  32  32  32  32
         <fontCodePoint>
-            <code>00113</code>
+            <code>120058</code>
             <codeCap>00081</codeCap>
         </fontCodePoint>
         <fontCodePoint>
-            <code>07813</code>
+            <code>120064</code>
             <codeCap>07812</codeCap>
         </fontCodePoint>
         <fontCodePoint>
-            <code>07879</code>
+            <code>120046</code>
             <codeCap>07878</codeCap>
         </fontCodePoint>
         <fontCodePoint>
-            <code>00341</code>
+            <code>120059</code>
             <codeCap>00340</codeCap>
         </fontCodePoint>
         <fontCodePoint>
-            <code>07831</code>
+            <code>120061</code>
             <codeCap>07790</codeCap>
         </fontCodePoint>
         <fontCodePoint>
-            <code>00255</code>
+            <code>120066</code>
             <codeCap>00376</codeCap>
         </fontCodePoint>
         <fontCodePoint>
-            <code>00252</code>
+            <code>120062</code>
             <codeCap>00220</codeCap>
         </fontCodePoint>
         <fontCodePoint>
-            <code>00239</code>
+            <code>120050</code>
             <codeCap>00207</codeCap>
         </fontCodePoint>
         <fontCodePoint>
-            <code>00246</code>
+            <code>120056</code>
             <codeCap>00214</codeCap>
         </fontCodePoint>
         <fontCodePoint>
-            <code>07767</code>
+            <code>120057</code>
             <codeCap>07766</codeCap>
         </fontCodePoint>
     <fontCodePoint>
-        <code>00228</code>
+        <code>120042</code>
         <codeCap>00196</codeCap>
     </fontCodePoint>
     <fontCodePoint>
-        <code>07785</code>
+        <code>120060</code>
         <codeCap>07784</codeCap>
     </fontCodePoint>
     <fontCodePoint>
-        <code>00271</code>
+        <code>120045</code>
         <codeCap>00270</codeCap>
     </fontCodePoint>
     <fontCodePoint>
-        <code>07711</code>
+        <code>120047</code>
         <codeCap>07710</codeCap>
     </fontCodePoint>
     <fontCodePoint>
-        <code>00289</code>
+        <code>120048</code>
         <codeCap>00288</codeCap>
     </fontCodePoint>
     <fontCodePoint>
-        <code>07719</code>
+        <code>120049</code>
         <codeCap>07718</codeCap>
     </fontCodePoint>
     <fontCodePoint>
-        <code>00106</code>
+        <code>120051</code>
         <codeCap>00074</codeCap>
     </fontCodePoint>
     <fontCodePoint>
-        <code>07731</code>
+        <code>120052</code>
         <codeCap>07730</codeCap>
     </fontCodePoint>
-    <fontCodePoint>
-        <code>00320</code>
+    <fontCodePoint> 32  32  32  32  32  32  32 120054 120063
+        <code>120053</code>
         <codeCap>00319</codeCap>
     </fontCodePoint>
     <fontCodePoint>
-        <code>07827</code>
+        <code>120067</code>
         <codeCap>07826</codeCap>
     </fontCodePoint>
     <fontCodePoint>
-        <code>07821</code>
+        <code>120065</code>
         <codeCap>07820</codeCap>
     </fontCodePoint>
     <fontCodePoint>
-        <code>00267</code>
+        <code>120044</code>
         <codeCap>00266</codeCap>
     </fontCodePoint>
     <fontCodePoint>
-        <code>07807</code>
+        <code>120063</code>
         <codeCap>07806</codeCap>
     </fontCodePoint>
     <fontCodePoint>
-        <code>07685</code>
+        <code>120043</code>
         <codeCap>07684</codeCap>
     </fontCodePoint>
     <fontCodePoint>
-        <code>00324</code>
+        <code>120055</code>
         <codeCap>00323</codeCap>
     </fontCodePoint>
     <fontCodePoint>

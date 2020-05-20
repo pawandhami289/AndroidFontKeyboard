@@ -2,6 +2,7 @@
 
 package com.highstarapp.fontkeyboard
 
+import android.app.Activity
 import android.content.Context
 import android.content.Context.WINDOW_SERVICE
 import android.content.res.Configuration
@@ -49,6 +50,22 @@ fun Context.adjustFontScale(configuration: Configuration){
         metrics.scaledDensity = configuration.fontScale * metrics.density
         resources.updateConfiguration(configuration, metrics)
     }
+    }catch (e:Exception){
+        e.printStackTrace()
+    }
+}
+
+internal fun Activity.logger(message: String) {
+    try{
+        Log.d(this.localClassName, message)
+    }catch (e:Exception){
+        e.printStackTrace()
+    }
+}
+
+internal fun Activity.logger(message: Int) {
+    try{
+        Log.d(this.localClassName, message.toString())
     }catch (e:Exception){
         e.printStackTrace()
     }

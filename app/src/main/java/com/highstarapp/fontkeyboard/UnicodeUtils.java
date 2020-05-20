@@ -42,17 +42,4 @@ public class UnicodeUtils {
 
 
 
-    public static String codePofsdf(int code){
-        String codePoint = String.valueOf(code);
-        String symbol = "";
-        try {
-            byte[] charset = codePoint.getBytes("UTF-8");
-            symbol = new String(charset,"UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return symbol;
-    }
-
-
 }
